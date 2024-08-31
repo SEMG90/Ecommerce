@@ -1,1 +1,51 @@
-<p>login works!</p>
+<!-- login -->
+<section class="login py-5">
+    <h2 class="text-main py-3">Login Now : </h2>
+    <form action="" [formGroup]="login" (ngSubmit)="regSubmit()">
+        <!-- email input-->
+        <div class="email py-3">
+            <label for="email">E-mail : </label>
+            <input [ngClass]="{
+                'is-valid': !login.get('email')?.errors && login.get('email')?.touched,
+                'is-invalid': login.get('email')?.errors && login.get('email')?.touched
+            }" type="email" id="email" class="form-control bg-main-light" formControlName="email">
+            @if(login.get('email')?.errors && login.get('email')?.touched){
+                <div class="alert alert-danger">
+                    @if(login.get('email')?.getError('required')){<p class="m-0">E-mail is Required!</p>}
+                    @else if (login.get('email')?.getError('email')) {<p class="m-0">E-mail is not Valid!</p>}
+                </div>
+            }
+        </div>
+        <!-- password input -->
+        <div class="pass py-3">
+            <label for="password">Password : </label>
+            <input [ngClass]="{
+                'is-valid': !login.get('password')?.errors && login.get('password')?.touched,
+                'is-invalid': login.get('password')?.errors && login.get('password')?.touched
+            }" type="password" id="password" class="form-control bg-main-light" formControlName="password">
+            @if(login.get('password')?.errors && login.get('password')?.touched){
+                <div class="alert alert-danger">
+                    @if(login.get('password')?.getError('required')){<p class="m-0">Password is Required!</p>}
+                    @else if (login.get('password')?.getError('pattern')) {<p class="m-0">Password is not Valid!</p>}
+                </div>
+            }
+        </div>
+
+        <button [disabled]="isLoading" type="submit" class="btn btn-main ms-auto d-block mt-3">
+            Login 
+            @if(isLoading){
+                <span><i class="fas fa-spin fa-spinner"></i></span>
+            }
+        </button>
+        
+        <!-- error message -->
+        @if( msgError ){
+            <p class="alert alert-danger mt-3"> {{ msgError }} </p>
+        }
+
+        <!-- success message -->
+         @if( msgSuccess ){
+            <p class="alert alert-info mt-3"> {{ msgSuccess }} </p>
+         }
+    </form>
+ </section>
