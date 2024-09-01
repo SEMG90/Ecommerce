@@ -13,49 +13,53 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-// services
-private readonly _authService = inject(AuthService); // auth service
-private readonly _formBuilder = inject(FormBuilder);  // formbuilder service
-private readonly _router = inject(Router) // router navigate from login component to login component
 
-// variables
-msgError:string = '';  // error message
-msgSuccess:boolean = false; // success message
-isLoading:boolean = false;  // loading spinner
+  // services
+  private readonly _authService = inject(AuthService); // auth service
+  private readonly _formBuilder = inject(FormBuilder);  // formbuilder service
+  private readonly _router = inject(Router) // router navigate from login component to login component
+ 
+  // variables
+  msgError:string = '';  // error message
+  msgSuccess:boolean = false; // success message
+  isLoading:boolean = false;  // loading spinner
 
-// easier way to create group controls
-login:FormGroup = this._formBuilder.group({ 
-  email: [null, [Validators.required, Validators.email]],
-  password: [null, [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*\W)(?!.* ).{6,}$/)]],
- } , { validators: this.passConfirm })
+  // easier way to create group controls
+  login:FormGroup = this._formBuilder.group({ 
+    email: [null, [Validators.required, Validators.email]],
+    password: [null, [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*\W)(?!.* ).{6,}$/)]]
+   })
 
-// login submit function
-regSubmit():void{
-  if(this.login.valid){
-    this.isLoading = true;
-    this._authService.setLogin(this.login.value).subscribe({
-      next:(res)=>{
-        console.log(res)
-        if(res.message == 'success'){
-          this.msgSuccess = true;
-          setTimeout(() => {
-            this._router.navigate(['/home'])
-          }, 2500);
+  // login submit function
+  regSubmit():void{
+    if(this.login.valid){
+      this.isLoading = true;
+      this._authService.setlogin(this.login.value).subscribe({
+        next:(res)=>{
+          console.log(res)
+          if(res.message == 'success'){
+            this.msgSuccess = true;
+            setTimeout(() => {
+
+              // save token
+              localStorage.setItem('userToken', res.token);
+
+              //decode token
+              this._authService.saveUserData;
+
+              // goto home component
+              this._router.navigate(['/home'])
+            }, 2500);
+          }
+          this.isLoading = false;
+        },
+        error:(err:HttpErrorResponse)=>{
+          this.msgError = err.error.message;
+          console.log(err)
+          this.isLoading = false;
         }
-        this.isLoading = false;
-      },
-      error:(err:HttpErrorResponse)=>{
-        this.msgError = err.error.message;
-        console.log(err)
-        this.isLoading = false;
-      }
-    })
+      })
+    }
   }
-}
 
-// password confirmation
-passConfirm(group:AbstractControl){
-  if( group.get('password')?.value === group.get('rePassword')?.value ){return null}
-  else{return {mismatch:true} }
-}
 }

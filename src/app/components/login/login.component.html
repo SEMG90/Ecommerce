@@ -1,6 +1,6 @@
 <!-- login -->
 <section class="login py-5">
-    <h2 class="text-main py-3">Login Now : </h2>
+    <h2 class="text-main py-3">login Now : </h2>
     <form action="" [formGroup]="login" (ngSubmit)="regSubmit()">
         <!-- email input-->
         <div class="email py-3">
@@ -31,8 +31,8 @@
             }
         </div>
 
-        <button [disabled]="isLoading" type="submit" class="btn btn-main ms-auto d-block mt-3">
-            Login 
+        <button [disabled]="login.invalid || isLoading" type="submit" class="btn btn-main ms-auto d-block mt-3">
+            login 
             @if(isLoading){
                 <span><i class="fas fa-spin fa-spinner"></i></span>
             }

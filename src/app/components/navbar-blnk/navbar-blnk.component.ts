@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar-blnk',
@@ -9,5 +10,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar-blnk.component.scss'
 })
 export class NavbarBlnkComponent {
-  title = 'Ecommerce';
+  readonly _authService = inject(AuthService);
+
+  // auth service function
+  signOut():void{
+    this._authService.logOut()
+  }
 }
