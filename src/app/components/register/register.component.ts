@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -12,17 +13,18 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
 
   // services
   private readonly _authService = inject(AuthService); // auth service
   private readonly _formBuilder = inject(FormBuilder);  // formbuilder service
   private readonly _router = inject(Router) // router navigate from register component to login component
  
-  // variables
+  // property
   msgError:string = '';  // error message
   msgSuccess:boolean = false; // success message
   isLoading:boolean = false;  // loading spinner
+  registerSub!: Subscription;
 
   // easier way to create group controls
   register:FormGroup = this._formBuilder.group({ 
@@ -47,7 +49,7 @@ export class RegisterComponent {
   regSubmit():void{
     if(this.register.valid){
       this.isLoading = true;
-      this._authService.setRegister(this.register.value).subscribe({
+      this.registerSub = this._authService.setRegister(this.register.value).subscribe({
         next:(res)=>{
           console.log(res)
           if(res.message == 'success'){
@@ -71,6 +73,11 @@ export class RegisterComponent {
   passConfirm(group:AbstractControl){
     if( group.get('password')?.value === group.get('rePassword')?.value ){return null}
     else{return {mismatch:true} }
+  }
+
+  // ondestroy Function
+  ngOnDestroy(): void {
+      this.registerSub?.unsubscribe();
   }
 
 }

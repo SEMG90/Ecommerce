@@ -1,1 +1,34 @@
-<p>home works!</p>
+<!-- home product -->
+<section class="home-product">
+    <h2 class="pb-2">Popular Product : </h2>
+    <div class="item d-flex flex-wrap">
+        @for (product of allProducts.slice(0,8); track product.id) {
+            <div class="col-md-3 p-1">
+                <div class="product p-1">
+                    <div class="p-1">
+                        <img [src]="product.imageCover" [alt]="product.title" class="img-fluid w-100"/>
+                        <div class="body p-2">
+                            <h5>{{ product.category.name }}</h5>
+                            <h6>{{ product.title.split(" ",2).join(" ") }}</h6>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span>{{ product.price }} EGP</span>
+                                <div>
+                                    @for (item of [1,2,3,4,5].slice(0, product.ratingsAverage); track $index) {
+                                        <span><i class="fas fa-star rating-color"></i></span>
+                                    }
+                                    
+                                    @if(product.ratingsAverage % 1 !== 0){
+                                        <span><i class="fa-regular fa-star-half-stroke rating-color"></i></span>
+                                    }
+                                        
+                                    <span class="text-muted">{{ product.ratingsAverage }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-main btn-outline-main w-100 position-relative fw-bold">Add to Cart</button>
+                </div>
+            </div>
+        }
+    </div>  
+</section>
