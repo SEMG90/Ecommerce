@@ -1,6 +1,52 @@
+<!-- home category slider static -->
+ <section class="category-slider-main">
+    <div class="slider-main d-flex">
+        <div class="col-md-10">
+            <div>
+                <owl-carousel-o [options]="categorySliderStcOptions">
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-1.jpeg" alt="slider-image-3" class="w-100 img-fluid cat-Dyn-Slidercat-Dyn-Slider cat-stc-Slider"/>
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-2.jpeg" alt="slider-image-3" class="w-100 img-fluid cat-Dyn-Slidercat-Dyn-Slider cat-stc-Slider"/>
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-3.jpeg" alt="slider-image-3" class="w-100 img-fluid cat-Dyn-Slidercat-Dyn-Slider cat-stc-Slider"/>
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src=" ./assets/images/slider-2.jpeg" alt="slider-image-3" class="w-100 img-fluid cat-Dyn-Slidercat-Dyn-Slider cat-stc-Slider"/>
+                    </ng-template> 
+                  </owl-carousel-o>
+            </div>
+            
+        </div>
+        <div class="col-md-2">
+           <div>
+                <img src="../../../assets/images/slider-image-1.jpeg" alt="slider-image-1" class="w-100 img-fluid cat-stcSec-Slider" />
+                <img src="../../../assets/images/slider-image-2.jpeg" alt="slider-image-2" class="w-100 img-fluid cat-stcSec-Slider" />
+           </div>
+        </div>
+    </div>
+ </section>
+
+<!-- home category slider dynamics -->
+ <section class="category-slider">
+    <h2 class="pb-2">Popular Category</h2>
+    <owl-carousel-o [options]="categorySliderOptions">
+        @for (catItem of allCategories; track catItem._id) {
+            <ng-template carouselSlide>
+                <div>
+                    <img [src]="catItem.image" [alt]="catItem.name" class="img-fluid w-100 cat-Dyn-Slider"/>
+                    <h6 class="text-dark pt-1">{{catItem.name}}</h6>
+                </div>
+            </ng-template>
+        }
+      </owl-carousel-o>
+ </section>
+
 <!-- home product -->
 <section class="home-product">
-    <h2 class="pb-2">Popular Product : </h2>
+    <h2 class="pb-2">Popular Product</h2>
     <div class="item d-flex flex-wrap">
         @for (product of allProducts.slice(0,12); track product.id) {
             <div class="col-md-2 py-2 px-1">
@@ -26,7 +72,8 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-main btn-outline-main w-100 position-relative fw-bold">Add to Cart</button>
+                    <button class="btn btn-main btn-outline-main w-50 position-relative fw-bold font-sm px-0">Add to Cart</button>
+                    <button class="btn btn-main btn-outline-main w-50 position-relative fw-bold font-sm" routerLink="/productsdetails">Details</button>
                 </div>
             </div>
         }

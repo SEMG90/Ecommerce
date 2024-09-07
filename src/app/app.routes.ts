@@ -11,6 +11,7 @@ import { BrandsComponent } from './components/brands/brands.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { authGuard } from './core/guards/auth.guard';
 import { logedGuard } from './core/guards/loged.guard';
+import { ProductsdetailsComponent } from './components/productsdetails/productsdetails.component';
 
 export const routes: Routes = [
     {path:'', component:LayoutAuthComponent, canActivate:[logedGuard], children:[
@@ -24,7 +25,8 @@ export const routes: Routes = [
         {path:'cart', component:CartComponent},
         {path:'products', component:ProductComponent},
         {path:'brands', component:BrandsComponent},
-        {path:'categories', component:CategoriesComponent}
+        {path:'categories', component:CategoriesComponent},
+        {path:'productsdetails', component:ProductsdetailsComponent}
     ]},
     {path:'**', component:NotfoundComponent}
 ];

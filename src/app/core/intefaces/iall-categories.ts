@@ -5,7 +5,6 @@ export interface IallCategories {
   image: string;
   createdAt: string;
   updatedAt: string;
-
 }
 
 interface Subcategory {
